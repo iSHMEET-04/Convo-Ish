@@ -41,13 +41,12 @@ def audio_frame_callback(frame: av.AudioFrame) -> av.AudioFrame:
     return frame
 
 # WebRTC streamer for mic input/output
-webrtc_ctx = webrtc_streamer(
+webrtc_streamer(
     key="voice-bot",
     mode="sendrecv",
-    audio_frame_callback=audio_frame_callback,
     media_stream_constraints={"audio": True, "video": False},
-    async_processing=True,
 )
+
 
 
 user_text = st.text_input("Or type your question here:")
