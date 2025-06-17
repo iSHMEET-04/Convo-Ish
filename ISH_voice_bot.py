@@ -1,8 +1,8 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
 import av
 import numpy as np
 import openai
+from streamlit_webrtc import webrtc_streamer, WebRtcMode
 
 
 openai.api_key = st.secrets["the_key"]
@@ -36,14 +36,15 @@ def openai_chat_completion(messages):
     return response['choices'][0]['message']['content'].strip()
 
 # Audio processing callback (dummy, just passes audio through)
+
+
 def audio_frame_callback(frame: av.AudioFrame) -> av.AudioFrame:
-    # Here you could process audio frames in real-time if needed
     return frame
 
-# WebRTC streamer for mic input/output
 webrtc_streamer(
     key="voice-bot",
-    mode="sendrecv",
+    mode=WebRtcMode.SENDRECV,
+    audio_frame_callback=audio_frame_callback,
     media_stream_constraints={"audio": True, "video": False},
 )
 
