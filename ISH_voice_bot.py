@@ -28,12 +28,13 @@ Keep answers between 2 to 4 sentences.
 chat_placeholder = st.empty()
 
 def openai_chat_completion(messages):
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-4",
         messages=messages,
         temperature=0.9,
     )
-    return response['choices'][0]['message']['content'].strip()
+    return response.choices[0].message.content.strip()
+
 
 # Audio processing callback (dummy, just passes audio through)
 
