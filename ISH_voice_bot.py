@@ -41,22 +41,24 @@ def openai_chat_completion(messages):
 def audio_frame_callback(frame: av.AudioFrame) -> av.AudioFrame:
     return frame
 
-webrtc_streamer(
+
+
+webrtc_ctx = webrtc_streamer(
     key="voice-bot",
     mode=WebRtcMode.SENDRECV,
     audio_frame_callback=audio_frame_callback,
     media_stream_constraints={"audio": True, "video": False},
 )
 
+if webrtc_ctx.audio_receiver:
+    audio_frames = webrtc_ctx.audio_receiver.get_frames(timeout=1)
+    if audio_frames:
+        pass
 
 
 user_text = st.text_input("Or type your question here:")
 
-if webrtc_ctx.audio_receiver:
-    audio_frames = webrtc_ctx.audio_receiver.get_frames(timeout=1)
-    if audio_frames:
-      
-        pass
+
 
 if user_text:
     
